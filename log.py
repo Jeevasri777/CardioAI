@@ -532,11 +532,15 @@ else:
                     X_scaled = scaler.transform(X_test)
                     predictions = model.predict(X_scaled)
 
-                    # Convert actual labels to match model integer output
+# Convert actual labels to match model integer output
+                    y_test = y_test.astype(str).str.strip().str.lower()
+
                     y_test = y_test.replace({
-                        "Absence": 0,
-                        "Presence": 1
-                    })
+                       "absence": 0,
+                       "presence": 1
+            })
+                    y_test = y_test.astype(int)
+                    predictions = predictions.astype(int)
 
                     accuracy_val = f"{accuracy_score(y_test, predictions)*100:.2f}%"
                 else:
